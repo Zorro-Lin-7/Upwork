@@ -14,7 +14,7 @@ class UserCreationForm(forms.ModelForm):
     email = forms.EmailField(max_length=254, required=True, help_text='Required. Inform a valid email address.')
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Passwrod Confirmation', widget=forms.PasswordInput) # 确认密码
+    password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput) # 确认密码
 
 
     class Meta:
@@ -24,15 +24,15 @@ class UserCreationForm(forms.ModelForm):
 
     def clean_password(self):
         # 检查两次密码是否相同
-        password1 = self.clean_data.get("password1")
-        password2 = self.clean_data.get("password2")
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match.")
         return password2
 
     def save(self, commit=True):
         # 以哈希格式存储密码
-        user = super().save(commit=Fasle)
+        user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
@@ -44,6 +44,7 @@ class UserChangeForm(forms.ModelForm):
     Includes all the fields on the user, but replaces the
     password field with admin's password hash display field.
     """
+    password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User

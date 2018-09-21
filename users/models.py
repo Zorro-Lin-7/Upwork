@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
 
         # 先创建普通用户
         user = self.create_user(
-                username, email, password, **kwargs,
+                username, email, password, **kwargs
         )
 
         # 设置超级用户相关属性
@@ -67,18 +67,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_owner = models.BooleanField('project_owner status', default=False)
     is_freelancer = models.BooleanField('freelancer status', default=False)
 
-    date_create = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
     is_admin = models.BooleanField(default=False) # 如果用户具有所有权限，值为True
-    is_supseruser = models.BooleanField(default=False) # 如果用户具有所有权限，值为True
+    is_superuser = models.BooleanField(default=False) # 如果用户具有所有权限，值为True
     is_staff = models.BooleanField(default=False)  # 如果用户被允许访问管理界面，值为True
     is_active = models.BooleanField(default=True) # 如果用户账户当前处于活动状态，值为True
 
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELD = ['email', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
     # 定义在admin后天显示的字段
     class Meta:
@@ -120,4 +120,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 #            income += job.price
 #
 #        return income
-
