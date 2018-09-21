@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def creawte_superuser(self, username, email, password=None, **kwargs):
+    def create_superuser(self, username, email, password=None, **kwargs):
         """
         创建超级用户
         """
