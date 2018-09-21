@@ -1,5 +1,5 @@
 from django import forms
-from django.conrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.db import transaction
 
 from .models import User
@@ -11,7 +11,7 @@ class UserCreationForm(forms.ModelForm):
     username = forms.CharField(max_length=30, required=True, help_text='Required.')
     first_name = forms.CharField(max_length=30, required=True, help_text='Optional.')
     last_name = forms.CharField(max_length=30, required=True, help_text='Optional.')
-    email = forms.EmailField(max_length=254, requried=True, help_text='Required. Inform a valid email address.')
+    email = forms.EmailField(max_length=254, required=True, help_text='Required. Inform a valid email address.')
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Passwrod Confirmation', widget=forms.PasswordInput) # 确认密码

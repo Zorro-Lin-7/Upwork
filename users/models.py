@@ -9,7 +9,7 @@ from django.contrib.auth.models import (
 
 
 # UserManager类必须定义在 User类之前
-class UserManager(BaseuserManager):
+class UserManager(BaseUserManager):
 
     def create_user(self, username, email, password, **kwargs):
         """
@@ -32,7 +32,7 @@ class UserManager(BaseuserManager):
 
         return user
 
-    def creawte_superuser(self, username, email, password=NOne, **kwargs):
+    def creawte_superuser(self, username, email, password=None, **kwargs):
         """
         创建超级用户
         """
@@ -50,7 +50,7 @@ class UserManager(BaseuserManager):
 
         return user
 
-class User(AbstractBaseuser, PermissionMixin):
+class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True) # 邮箱，唯一属性
 
@@ -73,7 +73,7 @@ class User(AbstractBaseuser, PermissionMixin):
     is_admin = models.BooleanField(default=False) # 如果用户具有所有权限，值为True
     is_supseruser = models.BooleanField(default=False) # 如果用户具有所有权限，值为True
     is_staff = models.BooleanField(default=False)  # 如果用户被允许访问管理界面，值为True
-    is_active = models.BooleanField(deafult=True) # 如果用户账户当前处于活动状态，值为True
+    is_active = models.BooleanField(default=True) # 如果用户账户当前处于活动状态，值为True
 
     objects = UserManager()
 
@@ -96,7 +96,7 @@ class User(AbstractBaseuser, PermissionMixin):
                     [i.capitalize() for i in self.first_name.split(' ')]
             )
             last_name = ' '.join(
-                    [i.capitalize() for i in self.last_name.split(' ') fi self.last_name]
+                    [i.capitalize() for i in self.last_name.split(' ') if self.last_name]
             )
             full_name = [first_name, last_name]
             full_name = ' '.join(
@@ -105,7 +105,7 @@ class User(AbstractBaseuser, PermissionMixin):
 
             return full_name
         else:
-            return f'{self.email}'  # 否则返回邮箱
+            return "%s" % (self.email)  # 否则返回邮箱
 
      # 此项为收入属性，与后面jobs应用关联，在jobs应用实现前，暂且注释
 #    @property
