@@ -8,6 +8,48 @@ from django.contrib.auth.models import (
         )
 
 
+# UserManager类必须定义在 User类之前
+class UserManager(BaseuserManager):
+
+    def create_user(self, username, email, password, **kwargs):
+        """
+        创建普通用户
+        """
+        # 创建普通用户前，判断email地址是否合法
+        if not email:
+            raise ValueError("Users must have a valid email address.")
+
+        # 根据输入信息创建用户
+        user = self.model(
+                username = username,
+                email = self.normalize_email(email),
+                first_name = kwargs.get('first_name'),
+                last_name = kwargs.get('last_name'),
+        )
+        # 将用户密码作为hash存储
+        user.set_password(password)
+        user.save()
+
+        return user
+
+    def creawte_superuser(self, username, email, password=NOne, **kwargs):
+        """
+        创建超级用户
+        """
+
+        # 先创建普通用户
+        user = self.create_user(
+                username, email, password, **kwargs,
+        )
+
+        # 设置超级用户相关属性
+        user.is_admin = True
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+        return user
+
 class User(AbstractBaseuser, PermissionMixin):
 
     email = models.EmailField(unique=True) # 邮箱，唯一属性
@@ -78,3 +120,4 @@ class User(AbstractBaseuser, PermissionMixin):
 #            income += job.price
 #
 #        return income
+
