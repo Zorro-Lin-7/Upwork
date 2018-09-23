@@ -75,12 +75,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)  # 如果用户被允许访问管理界面，值为True
     is_active = models.BooleanField(default=True) # 如果用户账户当前处于活动状态，值为True
 
-    objects = UserManager()
+    objects = UserManager() # 实例化；每个model至少有一个Manager，默认用objects字段名
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
-    # 定义在admin后天显示的字段
+    # 定义在admin后台显示的字段
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"

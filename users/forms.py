@@ -30,9 +30,9 @@ class UserCreationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match.")
         return password2
 
-    def save(self, commit=True):
+    def save(self, commit=True): # 覆写父类的save方法
         # 以哈希格式存储密码
-        user = super().save(commit=False)
+        user = super().save(commit=False) # super()调用父类对象；commit=False 会返回一个尚未保存到数据库的对象。
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
