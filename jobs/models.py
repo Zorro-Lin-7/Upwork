@@ -5,7 +5,7 @@ from taggit.managers import TaggableManager
 
 class Job(models.Model):
     """
-    Model for create a Job.
+    Model to create a Job.
 
     Attributes:
         date_created (datetime): Datetime of job creation
@@ -50,7 +50,7 @@ class Job(models.Model):
     ENDED = 'ended'
     CHOICES = ((ACTIVE, 'active'), (WORKING, 'working'), (ENDED, 'ended'))
 
-    status = models.CharField(max_length=9, choice=CHOICES, default=ACTIVE)
+    status = models.CharField(max_length=9, choices=CHOICES, default=ACTIVE)
 
     class Meta:
         verbose_name = 'job'
@@ -79,7 +79,7 @@ class JobProposal(models.Model):
     Model to create a freelancers's proposal for a Job.
 
     Attributes:
-        freelancers (user): User who submits job proposal
+        freelancer (user): User who submits job proposal
         job (job): Job object
         proposal (text): User proposal for the job
     """
