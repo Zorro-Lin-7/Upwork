@@ -6,6 +6,7 @@ from .views import (
         JobApplyView,
         JobCreateView, ProposalAcceptView,
         JobDetailView, JobListView,
+        JobCloseView,
         )
 
 app_name = "jobs"
@@ -17,9 +18,9 @@ urlpatterns = [
         path('<int:pk>', JobDetailView.as_view(), name='job_detail'),
         path('<int:pk>/apply', JobApplyView.as_view(), name='job_apply'),
         path('<int:pk>/accept/<str:username>', ProposalAcceptView.as_view(), name='proposal_accept'),
-    ]))),
+        path('<int:pk>/apply', JobCloseView.as_view(), name='job_close'),
+    ], 'jobs'), namespace='jobs')),
 ]
 
 # media相关映射
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
