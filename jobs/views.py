@@ -58,8 +58,8 @@ class JobDetailView(DetailView):
                     freelancer=self.request.user
                     )
 
-            context = super().get_context_data(**kwargs)
-            return context
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class JobApplyView(CreateView):
