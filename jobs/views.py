@@ -16,7 +16,7 @@ class JobListView(ListView):
     Show a list of jobs.
     """
     model = Job
-    ordering = ('job_title')
+    ordering = ('job_title',)
     context_object_name = 'jobs'
     template_name = 'jobs/job_list.html'
     queryset = Job.objects.all()
@@ -31,7 +31,7 @@ class JobCreateView(CreateView):
     fields = ('job_title', 'job_description', 'price', 'tags', 'document')
     template_name = 'jobs/job_add_form.html'
 
-    def from_valid(self, form):
+    def form_valid(self, form):
         job = form.save(commit=False) # 暂不存储表单数据到数据库，进行其他操作后再保存
         job.owner = self.request.user
 
@@ -78,7 +78,7 @@ class JobApplyView(CreateView):
     # 表单提交后，将申请者指定为当前用户，并保存在数据库，最后跳转到自己的任务页面
     def form_valid(self, form):
         proposal = form.save(commit=False)
-        proposal.job = Job.objects.get(pd=self.kwargs.get('pk'))
+        proposal.job = Job.objects.get(pk=self.kwargs.get('pk'))
         proposal.freelancer = self.request.user
 
         proposal.save()
@@ -101,5 +101,3 @@ class ProposalAcceptView(RedirectView):
         job.save()
 
         return super().get_redirect_url(*args, pk=kwargs['pk'])
-
-
