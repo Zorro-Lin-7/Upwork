@@ -31,13 +31,13 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link btn btn-sm btn-outline-secondary float-right" href="#" >My jobs </a>
+                            <a class="nav-link btn btn-sm btn-outline-secondary float-right" href="{% url 'users:job_profile' user.username %}" >My jobs </a>
                         </li>
                         <li>
                             <a  href="#" class=" nav-link  btn btn-sm btn-outline-secondary float-right" type="button">Messages</a>
                         </li>
                         <li>
-                            <a  href="#" class=" nav-link  btn btn-sm btn-outline-secondary float-right" type="button">All jobs</a>
+                            <a  href="{% url 'jobs:job_list' %}" class=" nav-link  btn btn-sm btn-outline-secondary float-right" type="button">All jobs</a>
                         </li>
                     </ul>
                 </div>
@@ -53,7 +53,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
                 <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#" class="nav-link  btn btn-sm btn-outline-secondary float-right" type="button">Create Job</a>
+                            <a href="{% url 'jobs:job_add' %}" class="nav-link  btn btn-sm btn-outline-secondary float-right" type="button">Create Job</a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'users:list_freelancer'%}" class="nav-link  btn btn-sm btn-outline-secondary float-right" type="button">Freelancers</a>

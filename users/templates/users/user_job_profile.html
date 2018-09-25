@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div>
+            <h4>Job Profile</h4>
+        </div>
+    </div>
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#c-tab">My jobs</a></li>
+            <li><a href="#m-tab">Applied Jobs</a></li>
+            <li><a href="#g-tab">Posted Jobs</a></li>
+        </ul>
+        <div>
+            <div>
+                {% for job in user.job_freelancer.all %}
+                    <a href="{% url 'jobs:job_detail' job.pk %}">{{ job.job_title }}</a><br/><br/>
+                {% endfor %}
+            </div>
+            <div>
+                {% for proposal in user.job_proposal.all %}
+                    {% if proposal.job not in user.job_freelancer.all %}
+                        <a href="{% url 'jobs:job_detail' proposal.job.pk %}">{{ proposal.job.job_title }}</a><br/><br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="tab-pane active" id="g-tab" role="tabpanel">
+                {% for job in user.job_owner.all %}
+                    <a href="{% url 'jobs:job_detail' job.pk %}">{{ job.job_title }}</a><br/><br/>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
