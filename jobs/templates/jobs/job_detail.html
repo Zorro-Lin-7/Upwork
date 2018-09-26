@@ -42,14 +42,14 @@
                         {% endif %}
                     {% endif %}
 
-                    {% else %}
-                        <a type="button" href="{% url 'jobs:job_close' job.pk %}" class="btn btn-warning">Close project</a><br/>
-                    {% endif %}
-
-                    <span class="badge badge-secondary">{{ job.status }}</span>
                 {% else %}
-                <a type="button" class="btn btn-info disabled">Completed</a><br/>
+                    <a type="button" href="{% url 'jobs:job_close' job.pk %}" class="btn btn-warning">Close project</a><br/>
                 {% endif %}
+
+            <span class="badge badge-secondary">{{ job.status }}</span>
+            {% else %}
+                <a type="button" class="btn btn-info disabled">Completed</a><br/>
+            {% endif %}
             </div>
         </div>
 

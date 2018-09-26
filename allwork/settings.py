@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'taggit',
     'crispy_forms',
     'jobs',
+    'direct_messages',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
