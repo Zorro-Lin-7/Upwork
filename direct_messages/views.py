@@ -25,3 +25,62 @@ class MessageView(RedirectView):
             return super().get_redirect_url(*args, pk=chatroom.pk)
 
         return reverse('jobs:job_list')
+
+
+class MessageDetailView(CreateView):
+
+    # 定义好模型、表单和模板
+    model = ChatRoom
+    form_class = MessageForm
+    template_name = 'direct_messages/direct_messages.html'
+
+    def get_context_data(self, **kwargs):
+
+        chat_id = self.kwargs.get('pk')
+
+        chatroom = ChatRoom.objects.get(pk=chat_id)
+
+        message = Message.objects.filter(
+                sender=chatroom.sender,
+                recipient=chatroom.recipient
+                ).first()
+        if not message:
+            message = Message.objects.filter(
+                    sender=chatroom.sender,
+                    recipient=chatroom.recipient
+                    ).first()
+
+            user = self.request.user
+            # 向模板返回active_conversation变量
+            kwargs['active_conversation'] = message
+            # 向模板返回conversations变量
+            current_conversations = MessagingService().get_conversations(user=self.request.user)
+            kwargs['conversations'] = current_conversations
+
+            if user == message.sender:
+                active_recipient = message.recipient
+            else:
+                active_recipient = message.sender
+            # 向模板返回running_conversations变量
+            running_conversations = MessagingService().get_active_conversations(user, active_recipient)
+            kwargs['running_conversations'] = running_conversations
+
+            return super().get_context_data(**kwargs)
+
+
+    def form_valid(self, form):
+        # 在提交表单后，指定sender 和recipient，然后存储到数据库
+        obj = self.get_object()
+
+        if self.request.user == obj.sender:
+            recipient = obj.recipient
+        else:
+            recipient = obj.sender
+
+        message = form.save(commit=False)
+        message.sender = self.request.user
+        message.recipient = recipient
+
+        message.save()
+        message.success(self.request, 'The message is sent with success!')
+        return redirect('direct_message:user_message', obj.pk)
