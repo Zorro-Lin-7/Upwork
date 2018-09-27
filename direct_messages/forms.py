@@ -20,4 +20,4 @@ class MessageForm(ModelForm):
 
     class Meta:
         model = Message
-        fields= ['content']
+        fields = ['content']

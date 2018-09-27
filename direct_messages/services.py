@@ -58,7 +58,7 @@ class MessagingService(object):
             if user == chatroom.sender:
                 recipient = chatroom.recipient
             else:
-                recipient = chatroom.sencder
+                recipient = chatroom.sender
             chatroom_dict['recipient'] = recipient
             chatroom_mapper.append(chatroom_dict)
 
@@ -73,5 +73,3 @@ class MessagingService(object):
                 ).order_by('sent_at')
 
         return active_conversations
-
-

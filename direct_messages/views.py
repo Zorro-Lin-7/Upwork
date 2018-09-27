@@ -50,22 +50,22 @@ class MessageDetailView(CreateView):
                     recipient=chatroom.recipient
                     ).first()
 
-            user = self.request.user
-            # 向模板返回active_conversation变量
-            kwargs['active_conversation'] = message
-            # 向模板返回conversations变量
-            current_conversations = MessagingService().get_conversations(user=self.request.user)
-            kwargs['conversations'] = current_conversations
+        user = self.request.user
+        # 向模板返回active_conversation变量
+        kwargs['active_conversation'] = message
+        # 向模板返回conversations变量
+        current_conversations = MessagingService().get_conversations(user=self.request.user)
+        kwargs['conversations'] = current_conversations
 
-            if user == message.sender:
-                active_recipient = message.recipient
-            else:
-                active_recipient = message.sender
-            # 向模板返回running_conversations变量
-            running_conversations = MessagingService().get_active_conversations(user, active_recipient)
-            kwargs['running_conversations'] = running_conversations
+        if user == message.sender:
+            active_recipient = message.recipient
+        else:
+            active_recipient = message.sender
+        # 向模板返回running_conversations变量
+        running_conversations = MessagingService().get_active_conversations(user, active_recipient)
+        kwargs['running_conversations'] = running_conversations
 
-            return super().get_context_data(**kwargs)
+        return super().get_context_data(**kwargs)
 
 
     def form_valid(self, form):
