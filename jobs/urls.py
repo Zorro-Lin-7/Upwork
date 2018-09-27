@@ -6,7 +6,7 @@ from .views import (
         JobApplyView,
         JobCreateView, ProposalAcceptView,
         JobDetailView, JobListView,
-        #JobCloseView,
+        JobCloseView,
         )
 
 app_name = "jobs"
@@ -18,7 +18,7 @@ urlpatterns = [
         path('<int:pk>', JobDetailView.as_view(), name='job_detail'),
         path('<int:pk>/apply', JobApplyView.as_view(), name='job_apply'),
         path('<int:pk>/accept/<str:username>', ProposalAcceptView.as_view(), name='proposal_accept'),
-#        path('<int:pk>/apply', JobCloseView.as_view(), name='job_close'),
+        path('<int:pk>/close', JobCloseView.as_view(), name='job_close'),
     ], 'jobs'), namespace='jobs')),
 ]
 

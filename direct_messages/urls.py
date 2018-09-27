@@ -6,7 +6,7 @@ app_name = 'direct_messages'
 
 urlpatterns = [
         path('messages/', include(([
-             path('', MessageView.as_view(), name='list_messge'),
+             path('', MessageView.as_view(), name='list_message'),
              path('<int:pk>', MessageDetailView.as_view(), name='user_message'),
         ])))
     ]
