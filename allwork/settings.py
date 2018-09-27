@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'jobs',
     'direct_messages',
+    'django.contrib.humanize',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
