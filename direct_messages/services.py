@@ -48,7 +48,7 @@ class MessagingService(object):
     def get_conversations(self, user):
         # 获取当前用户的对话列表
 
-        chatrooms = ChatRoom.objects.filter((Q(sender=user) | (recipient=user)))
+        chatrooms = ChatRoom.objects.filter((Q(sender=user) | Q(recipient=user)))
 
         chatroom_mapper = []
         for chatroom in chatrooms:

@@ -134,7 +134,6 @@ class ProposalAcceptView(RedirectView):
                                job=job.job_title
                                )
                     )
-        )
 
         messages.success(
                 self.request, 'User : {} is assigned to your project'.format(kwargs.get('username'))
