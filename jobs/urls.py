@@ -19,8 +19,8 @@ urlpatterns = [
         path('<int:pk>/apply', JobApplyView.as_view(), name='job_apply'),
         path('<int:pk>/accept/<str:username>', ProposalAcceptView.as_view(), name='proposal_accept'),
         path('<int:pk>/close', JobCloseView.as_view(), name='job_close'),
-    ], 'jobs'), namespace='jobs')),
-]
+    #], 'jobs'), namespace='jobs')),
+])))]
 
 # media相关映射
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
