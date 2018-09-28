@@ -105,14 +105,14 @@ class ProposalAcceptView(RedirectView):
         # 委托任务后，创建两者间的对话，并由owner发送第一个消息
         is_chatroom = False
         try:
-            chatroom = ChatRoom.objects.get(sender=self.request.user(), recipient=job.freelancer)
+            chatroom = ChatRoom.objects.get(sender=self.request.user, recipient=job.freelancer)
             is_chatroom = True
         except:
             pass
 
         if not is_chatroom:
             try:
-                chatroom = ChatRoom.objects.get(sender==job.freelancer, recipient=self.request.user)
+                chatroom = ChatRoom.objects.get(sender=job.freelancer, recipient=self.request.user)
             except:
                 pass
 

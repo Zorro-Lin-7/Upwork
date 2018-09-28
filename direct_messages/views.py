@@ -82,5 +82,5 @@ class MessageDetailView(CreateView):
         message.recipient = recipient
 
         message.save()
-        message.success(self.request, 'The message is sent with success!')
-        return redirect('direct_message:user_message', obj.pk)
+        messages.success(self.request, 'The message is sent with success!')
+        return redirect('direct_messages:user_message', obj.pk)
